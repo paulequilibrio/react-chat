@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import xmpp from './xmpp/xmpp.reducer'
+import users from './users/users.reducer'
 
 const rootPersistConfig = {
   key: 'ReactChat',
@@ -17,7 +18,8 @@ const xmppPersistConfig = {
 }
 
 const rootReducer = combineReducers({
-  xmpp: persistReducer(xmppPersistConfig, xmpp)
+  xmpp: persistReducer(xmppPersistConfig, xmpp),
+  users,
 })
 
 export default persistReducer(rootPersistConfig, rootReducer)

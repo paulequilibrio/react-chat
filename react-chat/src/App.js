@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Access from './modules/Access'
+import Chat from './modules/Chat'
 
 import './App.css'
 
@@ -14,7 +15,7 @@ const App = () => {
       <Switch>
         <Route path='/access' component={Access} />
         { client
-            ? <Route exact path='/chat' />
+            ? <Route exact path='/chat' component={Chat} />
             : <Redirect to='/access/login' />
         }
       </Switch>
