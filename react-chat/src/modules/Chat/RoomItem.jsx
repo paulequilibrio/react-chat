@@ -2,9 +2,9 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import User from '../../icons/User'
+import UserGroup from '../../icons/UserGroup'
 
-const UserItem = ({ id }) => {
+const RoomItem = ({ id }) => {
   const history = useHistory()
   const toUser = useSelector(state => state.xmpp.toUser)
   
@@ -12,10 +12,10 @@ const UserItem = ({ id }) => {
     <div
       className={`flex flex-row items-center w-full p-1 cursor-pointer
       ${ toUser === id ? 'bg-gray-700' : '' }`}
-      onClick={() => history.push(`/chat/user/${id}`)}
+      onClick={() => history.push(`/chat/room/${id}`)}
     >
       <div className='rounded-full w-12 h-12 bg-chat-600 flex items-center justify-center p-2'>
-        <User />
+        <UserGroup />
       </div>
       <div className='ml-2 w-40 truncate'>
         {id}
@@ -24,4 +24,4 @@ const UserItem = ({ id }) => {
   )
 }
 
-export default UserItem
+export default RoomItem

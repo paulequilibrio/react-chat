@@ -5,6 +5,7 @@ import { JID } from 'stanza'
 import { createRoomStart, roomsListStart } from '../../redux/rooms/rooms.actions'
 import { usersListStart } from '../../redux/users/users.actions'
 import UserItem from './UserItem'
+import RoomItem from './RoomItem'
 import Plus from '../../icons/Plus'
 
 const Sidebar = () => {
@@ -66,7 +67,7 @@ const Sidebar = () => {
           </form>
           {
             rooms.map(room => (
-              <UserItem key={room} kind='room' id={JID.getLocal(room)} />
+              <RoomItem key={room} id={JID.getLocal(room)} />
             ))
           }
         </div>
@@ -78,7 +79,7 @@ const Sidebar = () => {
         <div>
           {
             users.filter(c => c !== JID.getLocal(jid)).map(user => (
-              <UserItem key={user} kind='user' id={user} />
+              <UserItem key={user} id={user} />
             ))
           }
         </div>
