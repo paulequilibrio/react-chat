@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import Message from './Message'
 import Airplane from '../../icons/Airplane'
 import Refresh from '../../icons/Refresh'
+import { setUserTo } from '../../redux/xmpp/xmpp.actions'
 
 const Conversation = () => {
+  const { id } = useParams()
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
@@ -37,8 +41,10 @@ const Conversation = () => {
       setMessages(messages => [...messages, msg])
     }
     client.on('message', msg => {
-      addMessage(msg)
-      messagesView.current.scrollIntoView(false)
+      if (!msg.error) {
+        addMessage(msg)
+        messagesView.current.scrollIntoView(false)
+      }
     })
   }, [client])
 
@@ -48,6 +54,10 @@ const Conversation = () => {
       initialHistory()
     }
   }, [to])
+
+  useEffect(() => {
+    dispatch(setUserTo(id))
+  }, [dispatch, id])
 
   const sendMessage = async event => {
     event.preventDefault()
@@ -66,7 +76,7 @@ const Conversation = () => {
           : 'relative w-full h-full flex flex-col justify-between bg-gray-700 text-gray-100'
       }`}
     >
-      <div className='absolute top-0 bottom-12 w-full overflow-y-scroll justify-end p-4 bg-gray-400'>
+      <div className='absolute left-0 top-0 bottom-12 w-full overflow-y-scroll justify-end p-4 bg-gray-400'>
         <div ref={messagesView} className='flex flex-col'>
           {messages.map((message, index) => (
             <Message key={index} message={message} jid={jid} />

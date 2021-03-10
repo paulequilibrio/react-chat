@@ -15,7 +15,7 @@ const App = () => {
       <Switch>
         <Route path='/access' component={Access} />
         { client
-            ? <Route exact path='/chat' component={Chat} />
+            ? <Route path='/chat/:kind' component={Chat} />
             : <Redirect to='/access/login' />
         }
       </Switch>

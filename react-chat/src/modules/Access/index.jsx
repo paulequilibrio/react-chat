@@ -19,7 +19,7 @@ const Access = () => {
   }, [dispatch, client, jid, password])
 
   if (xmpp.client) {
-    return <Redirect to='/chat' />
+    return <Redirect to='/chat/user' />
   } else {
     return (
       <div className='flex justify-center items-center h-screen w-full text-chat-900 font-bold'>

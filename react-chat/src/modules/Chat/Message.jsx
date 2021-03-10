@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { onlyJid } from '../../lib/utils'
+import { JID } from 'stanza'
 
 const Message = ({ message, jid }) => {
   let msg, date
@@ -12,8 +11,8 @@ const Message = ({ message, jid }) => {
     msg = message
     date = new Date(parseInt(message.stanzaIds[0].id) / 1000)
   }
-  const from = onlyJid(msg.from)
-  const me = onlyJid(jid)
+  const from = JID.toBare(msg.from)
+  const me = JID.toBare(jid)
   return (
     <div
       className={`p-2 my-1 rounded-xl max-w-11/12 flex
