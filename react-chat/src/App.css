@@ -13,16 +13,16 @@ html, body, #root {
   @apply outline-none bg-white border-chat-700 ring-chat-700;
 }
 
-button {
+button.submit {
   @apply rounded font-bold text-white bg-chat-900 border-2 border-chat-900;
 }
 
-button:disabled {
+button.submit:disabled {
   @apply bg-gray-500 border-gray-500;
 }
 
 button:focus {
-  @apply outline-none border-2 border-white;
+  @apply outline-none border-2 border-white rounded;
 }
 
 @tailwind components;

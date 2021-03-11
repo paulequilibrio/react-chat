@@ -48,7 +48,10 @@ module.exports = {
   variants: {
     extend: {
       opacity: ['disabled'],
-      backgroundColor: ['disabled']
+      backgroundColor: ['disabled'],
+      borderWidth: ['hover', 'focus', 'active'],
+      borderStyle: ['hover', 'focus', 'active'],
+      borderColor: ['hover', 'focus', 'active']
     },
   },
   plugins: [

@@ -1,31 +1,28 @@
 import rooms from './rooms'
 
-const newroom = {
-  name: 'room',
-  service: 'localhost'
-}
+const newroom = 'newroom'
 
 describe('multi-user chat', () => {
   it('should list all rooms', async () => {
-    const list = await rooms.list()
-    expect(list).toEqual([])
+    const { data: list } = await rooms.list()
+    expect(Array.isArray(list)).toBe(true)
   })
 
   it('should create a new room', async () => {
-    const status = await rooms.create(newroom)
+    const { data: status } = await rooms.create(newroom)
     expect(status).toBe(0)
     await rooms.delete(newroom)
   })
 
   it('should delete a room', async () => {
     await rooms.create(newroom)
-    const listBefore = await rooms.list()
+    const { data: listBefore } = await rooms.list()
 
     await rooms.delete(newroom)
-    const listAfter = await rooms.list()
+    const { data: listAfter } = await rooms.list()
 
-    expect(listBefore).toContain('room@localhost')
-    expect(listAfter).not.toContain('room@localhost')
+    expect(listBefore).toContain(`${newroom}@localhost`)
+    expect(listAfter).not.toContain(`${newroom}@localhost`)
   })
 
 })

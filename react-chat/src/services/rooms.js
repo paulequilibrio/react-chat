@@ -4,21 +4,41 @@ const service = 'localhost'
 const host = 'localhost'
 
 const rooms = {
-  create: async (room) => {
-    const response = await httpClient.post('create_room', { ...room, host })
-    return response.data
+  create: async name => {
+    try {
+      const { data, error } = await httpClient.post('create_room', {
+        name,
+        service,
+        host
+      })
+      return { data, error }
+    } catch (error) {
+      return { error }
+    }
   },
 
   list: async () => {
-    const response = await httpClient.post('muc_online_rooms', { service })
-    return response.data
+    try {
+      const { data, error } = await httpClient.post('muc_online_rooms', {
+        service
+      })
+      return { data, error }
+    } catch (error) {
+      return { error }
+    }
   },
 
-  delete: async (room) => {
-    const response = await httpClient.post('destroy_room', room)
-    return response.data
+  delete: async name => {
+    try {
+      const { data, error } = await httpClient.post('destroy_room', {
+        name,
+        service
+      })
+      return { data, error }
+    } catch (error) {
+      return { error }
+    }
   }
-
 }
 
 export default rooms

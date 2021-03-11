@@ -8,7 +8,7 @@ const createXmppClient = data => {
 
   jid = jid || `${user}@localhost`
 
-  const HOSTNAME = window.location.hostname
+  const HOSTNAME = window ? window.location.hostname : 'localhost'
   const options = {
     transports: {
       websocket: `ws://${HOSTNAME}:5443/ws`,

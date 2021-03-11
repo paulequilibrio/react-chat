@@ -1,24 +1,49 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { JID } from 'stanza'
 
+import { destroyRoomStart } from '../../redux/rooms/rooms.actions'
 import UserGroup from '../../icons/UserGroup'
+import Trash from '../../icons/Trash'
 
-const RoomItem = ({ id }) => {
+const RoomItem = ({ id: room }) => {
   const history = useHistory()
+  const dispatch = useDispatch()
+  const client = useSelector(state => state.xmpp.client)
   const toUser = useSelector(state => state.xmpp.toUser)
-  
+
+  const onSelect = () => {
+    const nick = JID.getLocal(client.jid)
+    client.sendPresence(`${room}@localhost/${nick}`)
+    history.push(`/chat/room/${room}`)
+  }
+
+  const onDelete = () => {
+    dispatch(destroyRoomStart(room))
+  }
+
   return (
     <div
-      className={`flex flex-row items-center w-full p-1 cursor-pointer
-      ${ toUser === id ? 'bg-gray-700' : '' }`}
-      onClick={() => history.push(`/chat/room/${id}`)}
+      className={`flex items-center w-full p-1 cursor-pointer
+      ${toUser === room ? 'bg-gray-700' : ''}`}
     >
-      <div className='rounded-full w-12 h-12 bg-chat-600 flex items-center justify-center p-2'>
-        <UserGroup />
-      </div>
-      <div className='ml-2 w-40 truncate'>
-        {id}
+      <div className='w-full flex flex-row items-center justify-between'>
+        <div
+          onClick={() => onSelect()}
+          className='w-full flex flex-row items-center'
+        >
+          <div className='rounded-full w-12 h-full bg-chat-600 flex items-center justify-center p-2'>
+            <UserGroup />
+          </div>
+          <div className='ml-2 truncate w-32'>{room}</div>
+        </div>
+        <button
+          onClick={() => onDelete()}
+          className='w-8 h-8 focus:border-none active:border-solid active:border-transparent'
+        >
+          <Trash />
+        </button>
       </div>
     </div>
   )

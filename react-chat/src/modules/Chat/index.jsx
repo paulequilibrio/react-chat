@@ -23,7 +23,7 @@ const Chat = () => {
               xmpp.client.disconnect()
               dispatch(logout())
             }}
-            className='ml-8 bg-transparent border-none text-chat-100 font-normal'
+            className='ml-8 text-chat-100 font-normal'
           >
             Logout
           </button>

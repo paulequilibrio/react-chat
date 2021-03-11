@@ -42,7 +42,7 @@ const Login = () => {
       <button
         type='submit'
         disabled={!(user && password)}
-        className='mt-8 py-2'
+        className='submit mt-8 py-2'
       >
         Submit
       </button>

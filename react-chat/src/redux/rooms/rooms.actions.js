@@ -3,7 +3,9 @@ export const types = {
   CREATE_ROOM_FAILURE: 'CREATE_ROOM_FAILURE',
   ROOMS_LIST_START: 'ROOMS_LIST_START',
   ROOMS_LIST_SUCCESS: 'ROOMS_LIST_SUCCESS',
-  ROOMS_LIST_FAILURE: 'ROOMS_LIST_FAILURE'
+  ROOMS_LIST_FAILURE: 'ROOMS_LIST_FAILURE',
+  DESTROY_ROOM_START: 'DESTROY_ROOM_START',
+  DESTROY_ROOM_FAILURE: 'DESTROY_ROOM_FAILURE',
 }
 
 export const createRoomStart = (name) => ({
@@ -30,3 +32,12 @@ export const roomsListFailure = ({ error }) => ({
   payload: { error }
 })
 
+export const destroyRoomStart = (room) => ({
+  type: types.DESTROY_ROOM_START,
+  payload: room
+})
+
+export const destroyRoomFailure = ({ error }) => ({
+  type: types.DESTROY_ROOM_FAILURE,
+  payload: { error }
+})

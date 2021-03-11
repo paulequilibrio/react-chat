@@ -47,7 +47,7 @@ const Sidebar = () => {
           <span>Rooms</span>
           <button
             onClick={() => showInput()}
-            className='w-8 h-8 rounded-full bg-transparent border-none'
+            className='w-8 h-8 focus:border-none active:border-solid active:border-transparent'
           >
             <Plus />
           </button>

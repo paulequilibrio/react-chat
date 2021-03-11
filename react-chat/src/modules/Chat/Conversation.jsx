@@ -8,7 +8,7 @@ import Refresh from '../../icons/Refresh'
 import { setUserTo } from '../../redux/xmpp/xmpp.actions'
 
 const Conversation = () => {
-  const { id } = useParams()
+  const { kind, id } = useParams()
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
@@ -61,12 +61,15 @@ const Conversation = () => {
 
   const sendMessage = async event => {
     event.preventDefault()
-    if (to.length > 10) {
-      await client.sendMessage({ to, body: message })
+    if (to.length <= 10) return
+    await client.sendMessage({
+      to,
+      body: message,
+      type: kind === 'room' ? 'groupchat' : 'chat'
+    })
       await setMessage('')
       await lastHistory()
     }
-  }
 
   return (
     <div
@@ -78,8 +81,8 @@ const Conversation = () => {
     >
       <div className='absolute left-0 top-0 bottom-12 w-full overflow-y-scroll justify-end p-4 bg-gray-400'>
         <div ref={messagesView} className='flex flex-col'>
-          {messages.map((message, index) => (
-            <Message key={index} message={message} jid={jid} />
+          {messages.map((msg, index) => (
+            <Message key={index} message={msg} jid={jid} />
           ))}
         </div>
       </div>
@@ -89,7 +92,7 @@ const Conversation = () => {
       >
         <input
           type='text'
-          className='font-semibold w-full h-full pr-14 rounded-none'
+          className='focus:border-transparent font-semibold w-full h-full pr-14 rounded-none'
           placeholder={loading ? 'Loading messages...' : 'Type your message here'}
           value={message}
           onChange={event => setMessage(event.target.value)}
@@ -97,7 +100,7 @@ const Conversation = () => {
         />
         <button
           type='submit'
-          className='outline-none text-chat-700 bg-transparent border-transparent ml-4 w-10 h-10 focus:border-transparent focus:bg-transparent absolute right-2 bottom-1'
+          className='text-chat-700 bg-transparent focus:border-none ml-4 w-10 h-10 active:border-transparent active:border-solid absolute right-2 bottom-1'
         >
           { loading ? (<div className='animate-spin w-8 h-8'><Refresh /></div>) : (<Airplane />) }
         </button>

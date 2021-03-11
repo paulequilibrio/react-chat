@@ -6,10 +6,9 @@ const Message = ({ message, jid }) => {
   if (message.archive) {
     msg = message.archive.item.message
     date = new Date(message.archive.item.delay.timestamp)
-    
   } else {
     msg = message
-    date = new Date(parseInt(message.stanzaIds[0].id) / 1000)
+    // date = new Date(parseInt(message.stanzaIds[0].id) / 1000)
   }
   const from = JID.toBare(msg.from)
   const me = JID.toBare(jid)
@@ -26,7 +25,7 @@ const Message = ({ message, jid }) => {
         {msg.body}
       </span>
       <span className='text-xxs pl-4 self-end -mb-1'>
-        {date.toLocaleString('en-UK')}
+        {date && date.toLocaleString('en-UK')}
       </span> 
     </div>
   )
