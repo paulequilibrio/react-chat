@@ -1,0 +1,28 @@
+version: '3.9'
+
+networks:
+  chat:
+
+services:
+  ejabberd:
+    image: ejabberd/ecs
+    restart: always
+    volumes:
+      - ./ejabberd/conf/ejabberd.yml:/home/ejabberd/conf/ejabberd.yml
+    ports:
+      - 5222:5222
+      - 5280:5280
+      - 5281:5281
+      - 5443:5443
+    networks:
+      - chat
+
+  react-chat:
+    build: .
+    ports:
+      - 80:80
+    depends_on:
+      - ejabberd
+    restart: always
+    networks:
+      - chat
