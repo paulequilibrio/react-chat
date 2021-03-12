@@ -45,7 +45,7 @@ export function * destroyRoom ({ payload: room}) {
   try {
     const { error } = yield call(service.delete, room)
     if (error) yield put(destroyRoomFailure({ error }))
-    else yield put(roomsListStart())
+    yield put(roomsListStart())
   } catch (error) {
     yield put(destroyRoomFailure({ error }))
   }

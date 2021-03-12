@@ -1,13 +1,12 @@
 import { types } from './xmpp.actions'
 
 const INITIAL_STATE = {
+  host: 'localhost',
   client: null,
   jid: '',
   password: '',
   lastActivity: null,
-  toUser: '',
-  message: null,
-  messages: [],
+  to: '',
   error: null
 }
 
@@ -28,16 +27,9 @@ const xmpp = (state = INITIAL_STATE, action) => {
       return { ...state, jid: payload }
     case types.SET_CREDENTIALS:
       return { ...state, password: payload }
-    case types.SET_TO_USER:
-      return { ...state, toUser: payload }
-    case types.MESSAGE_RECEIVED:
-      return {
-        ...state,
-        error: null,
-        message: { ...payload },
-        messages: [...state.messages, payload]
-      }
-     default:
+    case types.SET_TO:
+      return { ...state, to: payload }
+    default:
       return state
   }
 }

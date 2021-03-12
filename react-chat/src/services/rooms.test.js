@@ -1,4 +1,5 @@
 import rooms from './rooms'
+import { JID } from 'stanza'
 
 const newroom = 'newroom'
 
@@ -21,8 +22,8 @@ describe('multi-user chat', () => {
     await rooms.delete(newroom)
     const { data: listAfter } = await rooms.list()
 
-    expect(listBefore).toContain(`${newroom}@localhost`)
-    expect(listAfter).not.toContain(`${newroom}@localhost`)
+    const room = JID.create({ local: newroom, domain: 'conference.localhost' })
+    expect(listBefore).toContain(room)
+    expect(listAfter).not.toContain(room)
   })
-
 })

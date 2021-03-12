@@ -10,12 +10,14 @@ import Trash from '../../icons/Trash'
 const RoomItem = ({ id: room }) => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const host = useSelector(state => state.xmpp.host)
   const client = useSelector(state => state.xmpp.client)
-  const toUser = useSelector(state => state.xmpp.toUser)
+  const to = useSelector(state => state.xmpp.to)
 
   const onSelect = () => {
     const nick = JID.getLocal(client.jid)
-    client.sendPresence(`${room}@localhost/${nick}`)
+    const roomId = JID.create({ local: room, domain: `conference.${host}` })
+    client.joinRoom(roomId, nick)
     history.push(`/chat/room/${room}`)
   }
 
@@ -26,7 +28,7 @@ const RoomItem = ({ id: room }) => {
   return (
     <div
       className={`flex items-center w-full p-1 cursor-pointer
-      ${toUser === room ? 'bg-gray-700' : ''}`}
+      ${JID.getLocal(to) === room ? 'bg-gray-700' : ''}`}
     >
       <div className='w-full flex flex-row items-center justify-between'>
         <div

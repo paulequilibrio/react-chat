@@ -1,7 +1,7 @@
 import httpClient from './httpClient'
 
-const service = 'localhost'
 const host = 'localhost'
+const service = `conference.${host}`
 
 const rooms = {
   create: async name => {

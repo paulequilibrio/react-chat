@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import { JID } from 'stanza'
 
 import Sidebar from './Sidebar'
-import Conversation from './Conversation'
+import History from './History'
 import { logout } from '../../redux/xmpp/xmpp.actions'
 
 const Chat = () => {
@@ -34,7 +34,7 @@ const Chat = () => {
           <Sidebar />
         </div>
         <div className='relative w-full h-full bg-gray-400'>
-          <Route path='/chat/:kind/:id' component={Conversation} />
+          <Route path='/chat/:kind/:id' component={History} />
         </div>
       </div>
     </div>

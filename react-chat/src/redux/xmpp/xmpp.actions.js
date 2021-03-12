@@ -11,8 +11,7 @@ export const types = {
   SET_CLIENT: 'SET_CLIENT',
   SET_JID: 'SET_JID',
   SET_CREDENTIALS: 'SET_CREDENTIALS',
-  SET_TO_USER: 'SET_TO_USER',
-  MESSAGE_RECEIVED: 'MESSAGE_RECEIVED'
+  SET_TO: 'SET_TO'
 }
 
 export const registerStart = ({ user, password }) => ({
@@ -35,7 +34,7 @@ export const loginFailure = ({ error }) => ({
   payload: { error }
 })
 
-export const getLastStart = (user) => ({
+export const getLastStart = user => ({
   type: types.GET_LAST_START,
   payload: user
 })
@@ -50,7 +49,6 @@ export const getLastFailure = ({ error }) => ({
   payload: { error }
 })
 
-// TODO: use kick_session endpoint
 export const logout = () => ({
   type: types.LOGOUT
 })
@@ -60,27 +58,22 @@ export const reconnectStart = ({ jid, password }) => ({
   payload: { jid, password }
 })
 
-export const setClient = (client) => ({
+export const setClient = client => ({
   type: types.SET_CLIENT,
   payload: client
 })
 
-export const setJid = (jid) => ({
+export const setJid = jid => ({
   type: types.SET_JID,
   payload: jid
 })
 
-export const setCredentials = (credentials) => ({
+export const setCredentials = credentials => ({
   type: types.SET_CREDENTIALS,
   payload: credentials
 })
 
-export const setUserTo = (user) => ({
-  type: types.SET_TO_USER,
+export const setTo = user => ({
+  type: types.SET_TO,
   payload: user
-})
-
-export const messageReceived = (message) => ({
-  type: types.MESSAGE_RECEIVED,
-  payload: message
 })

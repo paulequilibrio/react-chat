@@ -9,7 +9,7 @@ import {
   loginFailure,
   getLastSuccess,
   getLastFailure,
-  setUserTo
+  setTo
 } from './xmpp.actions'
 
 
@@ -18,7 +18,7 @@ export function * register ({ payload: { user, password } }) {
     const { data, error } = yield call(users.register, { user, password })
     if (!error && data && data.includes('successfully registered')) {
       yield createXmppClient({ user, password })
-      yield put(setUserTo(''))
+      yield put(setTo(''))
     } else {
       yield put(registerFailure({ error }))
     }
@@ -37,7 +37,7 @@ export function * login ({ payload: { user, password } }) {
     const { data, error } = yield call(users.checkPassword, { user, password })
     if (!error && data === 0) {
       yield createXmppClient({ user, password })
-      yield put(setUserTo(''))
+      yield put(setTo(''))
     } else {
       yield put(loginFailure({ error: 'Login and/or password wrong.' }))
     }
@@ -54,7 +54,7 @@ export function * onLoginStart () {
 export function * reconnect ({ payload: { jid, password } }) {
   try {
     yield createXmppClient({ jid, password })
-    yield put(setUserTo(''))
+    yield put(setTo(''))
   } catch (error) {
     yield put(loginFailure({ error }))
   }

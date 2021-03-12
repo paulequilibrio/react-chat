@@ -4,11 +4,11 @@ import { store } from '../redux/store'
 import { setClient, setJid, setCredentials } from '../redux/xmpp/xmpp.actions'
 
 const createXmppClient = data => {
-  let { user, password, jid } = data
+  let { user: local, password, jid } = data
+  const domain = store.getState().xmpp.host
+  jid = jid || XMPP.JID.create({ local, domain })
 
-  jid = jid || `${user}@localhost`
-
-  const HOSTNAME = window ? window.location.hostname : 'localhost'
+  const HOSTNAME = window ? window.location.hostname : domain
   const options = {
     transports: {
       websocket: `ws://${HOSTNAME}:5443/ws`,
@@ -22,8 +22,6 @@ const createXmppClient = data => {
   }
   const xmppClient = XMPP.createClient(options)
 
-  xmppClient.enableKeepAlive({ interval: 1000 })
-
   xmppClient.on('session:started', async input => {
     store.dispatch(setJid(xmppClient.jid))
     store.dispatch(setCredentials(xmppClient.config.credentials.password))
@@ -31,16 +29,8 @@ const createXmppClient = data => {
     await xmppClient.sendPresence()
   })
 
-  xmppClient.on('disconnected', error => {
-    if (xmppClient.sessionStarted) {
-      xmppClient.connect()
-    }
-  })
-
   xmppClient.connect()
-
   store.dispatch(setClient(xmppClient))
-
   return xmppClient
 }
 
