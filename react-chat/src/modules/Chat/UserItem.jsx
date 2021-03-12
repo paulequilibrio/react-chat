@@ -13,7 +13,9 @@ const UserItem = ({ id }) => {
     <div
       className={`flex flex-row items-center w-full p-1 cursor-pointer
       ${JID.getLocal(to) === id ? 'bg-gray-700' : ''}`}
-      onClick={() => history.push(`/chat/user/${id}`)}
+      onClick={() =>
+        JID.getLocal(to) !== id && history.push(`/chat/user/${id}`)
+      }
     >
       <div className='rounded-full w-12 h-12 bg-chat-600 flex items-center justify-center p-2'>
         <User />

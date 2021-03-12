@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { JID } from 'stanza'
@@ -14,12 +14,14 @@ const RoomItem = ({ id: room }) => {
   const client = useSelector(state => state.xmpp.client)
   const to = useSelector(state => state.xmpp.to)
 
-  const onSelect = () => {
+  const onSelect = useCallback(() => {
     const nick = JID.getLocal(client.jid)
     const roomId = JID.create({ local: room, domain: `conference.${host}` })
-    client.joinRoom(roomId, nick)
-    history.push(`/chat/room/${room}`)
-  }
+    if (to !== roomId) {
+      client.joinRoom(roomId, nick)
+      history.push(`/chat/room/${room}`)
+    }
+  }, [history, host, client, to, room])
 
   const onDelete = () => {
     dispatch(destroyRoomStart(room))
